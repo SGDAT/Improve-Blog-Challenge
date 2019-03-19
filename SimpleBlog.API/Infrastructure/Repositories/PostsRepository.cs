@@ -33,7 +33,10 @@ namespace SimpleBlog.API.Infrastructure
             var json = await _client.GetData();
             List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(json);
             foreach(Post post in posts)
+            {
                 post.Slug = Helpers.UrlSlugger.ToUrlSlug(post.Title);
+                post.BackgroundColour = Convert.ToString(post.Title.GetHashCode(), 16).Substring(0, 6);
+            }
 
             return posts;
         }
@@ -42,7 +45,10 @@ namespace SimpleBlog.API.Infrastructure
         {
             var posts = await GetAll();
             foreach(Post post in posts)
+            {
                 post.Slug = Helpers.UrlSlugger.ToUrlSlug(post.Title);
+                post.BackgroundColour = Convert.ToString(post.Title.GetHashCode(), 16).Substring(0, 6);
+            }
 
             Post postResponse = posts.FirstOrDefault(p => p.Slug == slug);
 

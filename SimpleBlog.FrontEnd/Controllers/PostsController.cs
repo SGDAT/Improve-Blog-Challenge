@@ -43,7 +43,7 @@ namespace SimpleBlog.FrontEnd.Controllers
         }
 
         [Route("/posts/{slug}")]
-        public async Task<IActionResult> Details(string slug)
+        public async Task<IActionResult> DetailsSlug(string slug)
         {
             var post = await postsRepo.Get<Post>(slug);
             var comments = await commentsRepo.GetAll<Comment>(post.Id);
@@ -52,7 +52,7 @@ namespace SimpleBlog.FrontEnd.Controllers
                 Post = post,
                 Comments = comments.ToList(),
             };
-            return View(vm);
+            return View(nameof(Details), vm);
         }
     }
 }

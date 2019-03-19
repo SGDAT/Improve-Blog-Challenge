@@ -10,9 +10,9 @@
     foreach(var post in Model.Posts) 
     {
         <div class="row m1emb">
-            <a href="@Url.Action("Details", "Posts", new { slug = post.Slug })">
+            <a href="@Url.Action("DetailsSlug", "Posts", new { slug = post.Slug })">
                 <div class="col-md-4">
-                    <img src="@post.Image" alt="@post.Title" class="img-responsive" />
+                    <img src="@post.Image" alt="@post.Title" class="img-responsive" style="background: #@post.BackgroundColour; padding: 10px" />
                 </div>
                 <div class="col-md-8">
                     <h3>@post.Title</h3>

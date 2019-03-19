@@ -1,7 +1,6 @@
 @model SimpleBlog.FrontEnd.ViewModels.PostDetailsViewModel
 @{
     ViewData["Title"] = $"{Model.Post.Title} - Simple Blog";
-    var bgRand = new Random(0);
 }
 
 @if(Model.Post != null) 
@@ -10,7 +9,7 @@
     
     <div class="row mb-1">
         <div class="col-md-12">
-            <h2><img src="https://via.placeholder.com/1920x600/@bgRand.Next(100000, 1000000)/ffffff?text=@Model.Post.Title" alt="@Model.Post.Title" class="img-responsive" /></h2>
+            <h2><img src="https://via.placeholder.com/1920x600/@Model.Post.BackgroundColour/ffffff?text=@Model.Post.Title" alt="@Model.Post.Title" class="img-responsive" /></h2>
         </div>
     </div>
 
