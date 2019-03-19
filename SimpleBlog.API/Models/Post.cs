@@ -22,5 +22,7 @@ namespace SimpleBlog.API.Models
 
         [JsonProperty("image")]
         public string Image => "https://via.placeholder.com/150x150";
+
+        public string Slug { get; set; }
     }
 }

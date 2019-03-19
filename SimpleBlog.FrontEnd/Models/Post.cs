@@ -16,5 +16,7 @@ namespace SimpleBlog.FrontEnd.Models
 
         [JsonProperty("image")]
         public string Image { get; set; }
+
+        public string Slug { get; set; }
     }
 }

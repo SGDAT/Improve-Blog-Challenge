@@ -29,11 +29,25 @@ namespace SimpleBlog.FrontEnd.Controllers
             return View(vm);
         }
 
+        [Route("/posts/details/{id}")]
         public async Task<IActionResult> Details(int id)
         {
             var post = await postsRepo.Get<Post>(id);
             var comments = await commentsRepo.GetAll<Comment>(id);
             var vm = new PostDetailsViewModel 
+            {
+                Post = post,
+                Comments = comments.ToList(),
+            };
+            return View(vm);
+        }
+
+        [Route("/posts/{slug}")]
+        public async Task<IActionResult> Details(string slug)
+        {
+            var post = await postsRepo.Get<Post>(slug);
+            var comments = await commentsRepo.GetAll<Comment>(post.Id);
+            var vm = new PostDetailsViewModel
             {
                 Post = post,
                 Comments = comments.ToList(),

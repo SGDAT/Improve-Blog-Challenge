@@ -23,14 +23,21 @@ namespace SimpleBlog.API.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> Get() 
         {
-            return JsonConvert.SerializeObject(await _postsRepo.GetN<Post>(100));
+            return JsonConvert.SerializeObject(await _postsRepo.GetN(100));
         }
 
         // api/posts/1
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> Get(int id) 
         {
-            return JsonConvert.SerializeObject(await _postsRepo.Get<Post>(id));
+            return JsonConvert.SerializeObject(await _postsRepo.Get(id));
+        }
+
+        // api/posts/post-title
+        [HttpGet("s/{slug}")]
+        public async Task<ActionResult<string>> Get(string slug)
+        {
+            return JsonConvert.SerializeObject(await _postsRepo.GetSlug(slug));
         }
     }
 }

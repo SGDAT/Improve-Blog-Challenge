@@ -28,5 +28,18 @@ namespace SimpleBlog.FrontEnd.Infrastructure
             var json = await _client.GetData(postId + "");
             return JsonConvert.DeserializeObject<List<Comment>>(json);
         }
+
+        public async Task<IList<Comment>> GetN<Comment>(string slug, int count)
+        {
+            var comments = await GetAll<Comment>(slug);
+            return comments.Take(count).ToList();
+        }
+
+        public async Task<IList<Comment>> GetAll<Comment>(string slug)
+        {
+            _client.EntityType = EnumEntityType.comments;
+            var json = await _client.GetData(slug + "");
+            return JsonConvert.DeserializeObject<List<Comment>>(json);
+        }
     }
 }

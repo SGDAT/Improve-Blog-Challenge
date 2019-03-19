@@ -8,5 +8,6 @@ namespace SimpleBlog.FrontEnd.Infrastructure
         Task<IList<T>> GetAll<T>();
         Task<IList<T>> GetN<T>(int count);
         Task<T> Get<T>(int id);
+        Task<T> Get<T>(string slug);
     }
 }

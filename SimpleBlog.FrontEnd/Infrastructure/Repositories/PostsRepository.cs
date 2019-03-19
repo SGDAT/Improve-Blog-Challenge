@@ -21,6 +21,12 @@ namespace SimpleBlog.FrontEnd.Infrastructure
             return JsonConvert.DeserializeObject<Post>(json);
         }
 
+        public async Task<Post> Get<Post>(string slug)
+        {
+            var json = await _client.GetData($"/s/{slug}");
+            return JsonConvert.DeserializeObject<Post>(json);
+        }
+
         public async Task<IList<Post>> GetN<Post>(int count)
         {
             var posts = await GetAll<Post>();

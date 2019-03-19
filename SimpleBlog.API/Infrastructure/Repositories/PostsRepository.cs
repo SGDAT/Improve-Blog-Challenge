@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using SimpleBlog.API.Models;
 
 namespace SimpleBlog.API.Infrastructure 
 {
@@ -15,22 +16,38 @@ namespace SimpleBlog.API.Infrastructure
             _client = client;
         }
 
-        public async Task<Post> Get<Post>(int id)
+        public async Task<Post> Get(int id)
         {
             var json = await _client.GetData($"/{id}");
             return JsonConvert.DeserializeObject<Post>(json);
         }
 
-        public async Task<IList<Post>> GetN<Post>(int count)
+        public async Task<IList<Post>> GetN(int count)
         {
-            var posts = await GetAll<Post>();
+            var posts = await GetAll();
             return posts.Take(count).ToList();
         }
 
-        public async Task<IList<Post>> GetAll<Post>()
+        public async Task<IList<Post>> GetAll()
         {
             var json = await _client.GetData();
-            return JsonConvert.DeserializeObject<List<Post>>(json);
+            List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(json);
+            foreach(Post post in posts)
+                post.Slug = Helpers.UrlSlugger.ToUrlSlug(post.Title);
+
+            return posts;
+        }
+
+        public async Task<Post> GetSlug(string slug)
+        {
+            var posts = await GetAll();
+            foreach(Post post in posts)
+                post.Slug = Helpers.UrlSlugger.ToUrlSlug(post.Title);
+
+            Post postResponse = posts.FirstOrDefault(p => p.Slug == slug);
+
+            return postResponse;
+
         }
     }
 }
