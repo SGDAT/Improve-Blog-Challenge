@@ -28,5 +28,8 @@ namespace SimpleBlog.API.Models
 
         [JsonProperty("backgroundColour")]
         public string BackgroundColour { get; set; }
+
+        [JsonProperty("commentCount")]
+        public int CommentCount { get; set; }
     }
 }

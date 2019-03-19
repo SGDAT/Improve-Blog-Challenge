@@ -10,10 +10,12 @@ namespace SimpleBlog.API.Infrastructure
     public class PostsRepository : IPostsRepository 
     {
         public static IWebClient _client;
+        private readonly ICommentsRepository _commentsRepository;
 
-        public PostsRepository(IWebClient client)
+        public PostsRepository(IWebClient client, ICommentsRepository commentsRepository)
         {
             _client = client;
+            this._commentsRepository = commentsRepository;
         }
 
         public async Task<Post> Get(int id)
@@ -36,6 +38,7 @@ namespace SimpleBlog.API.Infrastructure
             {
                 post.Slug = Helpers.UrlSlugger.ToUrlSlug(post.Title);
                 post.BackgroundColour = Convert.ToString(post.Title.GetHashCode(), 16).Substring(0, 6);
+                post.CommentCount = (await _commentsRepository.GetAll<Comment>(post.Id)).Count;
             }
 
             return posts;
